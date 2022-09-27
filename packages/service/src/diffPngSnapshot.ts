@@ -78,7 +78,7 @@ export async function diffPngSnapshot(
     pass,
     diffRatio,
     newPage: receivedPng.data.toString('base64'),
-    diffImage: diffPng.data.toString('base64'),
+    diffImage: compositePng.data.toString('base64'),
   };
 }
 
