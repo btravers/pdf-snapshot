@@ -1,5 +1,5 @@
 {
-  "name": "@pdf-snapshot/jest",
+  "name": "@btravers/pdf-snapshot-jest",
   "version": "0.0.1",
   "description": "Jest extension",
   "author": "Benoit TRAVERS",
@@ -18,7 +18,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "@pdf-snapshot/service": "workspace:^",
+    "@btravers/pdf-snapshot-service": "workspace:^",
     "@trpc/server": "10.0.0-proxy-beta.7",
     "@types/dedent": "^0.7.0",
     "@types/jest": "^28.1.3",

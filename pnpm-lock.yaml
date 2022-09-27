@@ -22,7 +22,7 @@ importers:
 
   packages/jest:
     specifiers:
-      '@pdf-snapshot/service': workspace:^
+      '@btravers/pdf-snapshot-service': workspace:^
       '@trpc/client': 10.0.0-proxy-beta.7
       '@trpc/server': 10.0.0-proxy-beta.7
       '@types/dedent': ^0.7.0
@@ -40,7 +40,7 @@ importers:
       lodash: 4.17.21
       rimraf: 3.0.2
     devDependencies:
-      '@pdf-snapshot/service': link:../service
+      '@btravers/pdf-snapshot-service': link:../service
       '@trpc/server': 10.0.0-proxy-beta.7
       '@types/dedent': 0.7.0
       '@types/jest': 28.1.8

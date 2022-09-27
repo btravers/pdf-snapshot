@@ -1,5 +1,5 @@
 {
-  "name": "@pdf-snapshot/root",
+  "name": "@btravers/pdf-snapshot",
   "description": "Tool to test visual regression in PDF documents",
   "author": "Benoit TRAVERS",
   "license": "MIT",

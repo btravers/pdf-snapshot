@@ -4,7 +4,7 @@ import _ from 'lodash';
 import dedent from 'dedent';
 import * as process from 'process';
 
-import type { AppRouter } from '@pdf-snapshot/service';
+import type { AppRouter } from '@btravers/pdf-snapshot-service';
 import fs from 'node:fs';
 import rimraf from 'rimraf';
 
