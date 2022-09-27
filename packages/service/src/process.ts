@@ -4,7 +4,6 @@ import {
   DiffPngSnapshotOptions,
   DiffPngSnapshotResult,
 } from './diffPngSnapshot';
-import { pngBufferToBase64 } from './utils';
 
 type Options = PdfToPngOptions & DiffPngSnapshotOptions;
 type PageResult =
@@ -38,7 +37,7 @@ export async function matchPdfSnapshot(
       if (index >= snapshots.length) {
         return {
           added: true,
-          newPage: pngBufferToBase64(page),
+          newPage: page.toString('base64'),
         };
       }
 

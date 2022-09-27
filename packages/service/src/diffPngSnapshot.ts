@@ -1,6 +1,5 @@
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
-import { pngBufferToBase64 } from './utils';
 
 export type DiffPngSnapshotOptions = {
   failureThreshold?: number;
@@ -78,8 +77,8 @@ export async function diffPngSnapshot(
   return {
     pass,
     diffRatio,
-    newPage: pngBufferToBase64(receivedPng.data),
-    diffImage: pngBufferToBase64(diffPng.data),
+    newPage: receivedPng.data.toString('base64'),
+    diffImage: diffPng.data.toString('base64'),
   };
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@btravers/pdf-snapshot-jest",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Jest extension",
   "author": "Benoit TRAVERS",
   "license": "MIT",
@@ -9,23 +9,27 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "prepare": "pnpm build"
+    "prepare": "pnpm build",
+    "test": "jest"
   },
   "dependencies": {
-    "@trpc/client": "10.0.0-proxy-beta.7",
+    "@trpc/client": "10.0.0-proxy-beta.8",
+    "@trpc/server": "10.0.0-proxy-beta.8",
     "dedent": "^0.7.0",
     "lodash": "^4.17.21",
+    "node-fetch-commonjs": "^3.2.4",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@btravers/pdf-snapshot-service": "workspace:^",
-    "@trpc/server": "10.0.0-proxy-beta.7",
     "@types/dedent": "^0.7.0",
     "@types/jest": "^28.1.3",
     "@types/lodash": "^4.14.185",
-    "@types/node": "^16.11.51",
+    "@types/node": "^16.11.62",
     "@types/rimraf": "^3.0.2",
-    "jest": "28.1.3"
+    "jest": "28.1.3",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.8.3"
   },
   "peerDependencies": {
     "jest": "28"

@@ -22,6 +22,8 @@ export async function pdfToPng(
     ),
   }).promise;
 
+  console.log('Pdf document interpreted');
+
   async function pdfPageToPng(pageNumber: number): Promise<Buffer> {
     const page = await pdfDocument.getPage(pageNumber);
     const viewport = page.getViewport({
