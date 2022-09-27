@@ -1,4 +1,4 @@
-name: service
+name: ci
 
 on:
   push:
@@ -28,3 +28,22 @@ jobs:
           push: true
           tags: btravers/pdf-snapshot:latest
           platforms: linux/amd64,linux/arm64
+
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.12.2
+          run_install: true
+
+      - run: pnpm --filter ./packages/jest publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

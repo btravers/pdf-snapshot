@@ -8,7 +8,8 @@
   "types": "dist/server.d.js",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "pnpm build"
   },
   "dependencies": {
     "@trpc/server": "10.0.0-proxy-beta.7",
