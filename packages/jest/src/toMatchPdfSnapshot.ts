@@ -52,7 +52,7 @@ expect.extend({
     function snapshotIdentifier(pageNumber: number): string {
       return `${pageNumber.toString().padStart(2, '0')}_${_.kebabCase(
         currentTestName,
-      )}-${pageNumber}-snap`;
+      )}-snap`;
     }
 
     async function writeFile(data: string, filePath: string): Promise<void> {
