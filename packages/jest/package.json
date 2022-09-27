@@ -1,6 +1,6 @@
 {
   "name": "@btravers/pdf-snapshot-jest",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Jest extension",
   "author": "Benoit TRAVERS",
   "license": "MIT",

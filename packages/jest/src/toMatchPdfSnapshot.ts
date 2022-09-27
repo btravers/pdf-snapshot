@@ -55,18 +55,10 @@ expect.extend({
       )}-${pageNumber}-snap`;
     }
 
-    async function writeSnapshot(
-      newPageResult: string,
-      pageNumber: number,
-    ): Promise<void> {
-      const snapshotPath = path.join(
-        snapshotsDirectory,
-        `${snapshotIdentifier(pageNumber)}.png`,
-      );
+    async function writeFile(data: string, filePath: string): Promise<void> {
+      const decodedData = Buffer.from(data, 'base64');
 
-      const page = Buffer.from(newPageResult, 'base64');
-
-      await fs.promises.writeFile(snapshotPath, page);
+      await fs.promises.writeFile(filePath, decodedData);
     }
 
     async function getSnapshots(): Promise<Buffer[]> {
@@ -130,7 +122,11 @@ expect.extend({
       await Promise.all(
         results.map(async (result, index) => {
           if ('newPage' in result) {
-            await writeSnapshot(result.newPage, index + 1);
+            const snapshotPath = path.join(
+              snapshotsDirectory,
+              `${snapshotIdentifier(index + 1)}.png`,
+            );
+            await writeFile(result.newPage, snapshotPath);
           }
         }),
       );
@@ -148,18 +144,18 @@ expect.extend({
           .filter((result) => 'pass' in result && !result.pass)
           .map(async (result, index) => {
             const pageNumber = index + 1;
+            const snapshotPath = path.join(
+              snapshotsDirectory,
+              `${snapshotIdentifier(pageNumber)}.png`,
+            );
 
             if ('deleted' in result && result.deleted) {
-              const snapshotPath = path.join(
-                snapshotsDirectory,
-                `${snapshotIdentifier(pageNumber)}.png`,
-              );
               await fs.promises.rm(snapshotPath);
               return;
             }
 
             if ('newPage' in result) {
-              await writeSnapshot(result.newPage, pageNumber);
+              await writeFile(result.newPage, snapshotPath);
               return;
             }
           }),
@@ -195,7 +191,7 @@ expect.extend({
         }
 
         if ('pass' in result && !result.pass) {
-          await fs.promises.writeFile(diffOutputPath, result.diffImage);
+          await writeFile(result.diffImage, diffOutputPath);
           return `[Page ${pageNumber}] - Does not match snapshot - diffRatio ${result.diffRatio}`;
         }
 
