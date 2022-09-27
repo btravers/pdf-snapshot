@@ -74,11 +74,20 @@ export async function diffPngSnapshot(
     );
   });
 
+  const diffImageStream = compositePng.pack();
+
+  const diffImage = await new Promise<Buffer>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    diffImageStream.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
+    diffImageStream.on('error', (err) => reject(err));
+    diffImageStream.on('end', () => resolve(Buffer.concat(chunks)));
+  });
+
   return {
     pass,
     diffRatio,
     newPage: receivedPng.data.toString('base64'),
-    diffImage: compositePng.data.toString('base64'),
+    diffImage: diffImage.toString('base64'),
   };
 }
 
