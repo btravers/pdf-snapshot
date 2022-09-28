@@ -52,7 +52,11 @@ expect.extend({
     const diffFilesToRemove = (
       await fs.promises.readdir(snapshotsDirectory)
     ).filter((file) => file.endsWith('-diff.png'));
-    await Promise.all(diffFilesToRemove.map((file) => fs.promises.rm(file)));
+    await Promise.all(
+      diffFilesToRemove.map((file) =>
+        fs.promises.rm(path.join(snapshotsDirectory, file)),
+      ),
+    );
 
     /**
      * Create snapshot file identifier
