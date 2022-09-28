@@ -1,6 +1,5 @@
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import rimraf from 'rimraf';
 import fetch from 'node-fetch-commonjs';
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import _ from 'lodash';
@@ -49,18 +48,38 @@ expect.extend({
       recursive: true,
     });
 
+    // remove old diff files
+    const diffFilesToRemove = (
+      await fs.promises.readdir(snapshotsDirectory)
+    ).filter((file) => file.endsWith('-diff.png'));
+    await Promise.all(diffFilesToRemove.map((file) => fs.promises.rm(file)));
+
+    /**
+     * Create snapshot file identifier
+     *
+     * @param pageNumber the page of the pdf file
+     */
     function snapshotIdentifier(pageNumber: number): string {
       return `${pageNumber.toString().padStart(2, '0')}_${_.kebabCase(
         currentTestName,
       )}-snap`;
     }
 
+    /**
+     * Write file from base64 encoded content
+     *
+     * @param data base64 encoded data
+     * @param filePath file path
+     */
     async function writeFile(data: string, filePath: string): Promise<void> {
       const decodedData = Buffer.from(data, 'base64');
 
       await fs.promises.writeFile(filePath, decodedData);
     }
 
+    /**
+     * Get the list of existing snapshots
+     */
     async function getSnapshots(): Promise<Buffer[]> {
       const result: Buffer[] = [];
 
@@ -93,18 +112,14 @@ expect.extend({
       snapshot.toString('base64'),
     );
 
-    const matchPdfSnapshotQuery = {
+    const { results } = await trpc.matchPdfSnapshot.mutate({
       pdf: pdf.toString('base64'),
       snapshots,
       options: {
         scale: options?.scale,
         failureThreshold: options?.failureThreshold,
       },
-    };
-
-    const { results } = await trpc.matchPdfSnapshot.mutate(
-      matchPdfSnapshotQuery,
-    );
+    });
 
     const updateSnapshot = snapshotState._updateSnapshot === 'all';
 
@@ -176,7 +191,6 @@ expect.extend({
           snapshotsDirectory,
           `${snapshotIdentifier(pageNumber)}-diff.png`,
         );
-        rimraf.sync(diffOutputPath);
 
         if ('added' in result && result.added) {
           return `[Page ${pageNumber}] - Added`;

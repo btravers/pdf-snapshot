@@ -74,28 +74,31 @@ export async function diffPngSnapshot(
     );
   });
 
-  const diffImageStream = compositePng.pack();
-
-  const diffImage = await new Promise<Buffer>((resolve, reject) => {
-    const chunks: Buffer[] = [];
-    diffImageStream.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
-    diffImageStream.on('error', (err) => reject(err));
-    diffImageStream.on('end', () => resolve(Buffer.concat(chunks)));
-  });
+  const diffImage = await toBuffer(compositePng);
 
   return {
     pass,
     diffRatio,
-    newPage: receivedPng.data.toString('base64'),
+    newPage: receivedImage.toString('base64'),
     diffImage: diffImage.toString('base64'),
   };
 }
 
-async function toRawPng(image: Buffer) {
+async function toRawPng(image: Buffer): Promise<PNG> {
   return new Promise<PNG>((resolve, reject) =>
     new PNG().parse(image, (err, rawImage) => {
       if (err) return reject(err);
       resolve(rawImage);
     }),
   );
+}
+
+async function toBuffer(image: PNG): Promise<Buffer> {
+  const imageStream = image.pack();
+  return new Promise<Buffer>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    imageStream.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
+    imageStream.on('error', (err) => reject(err));
+    imageStream.on('end', () => resolve(Buffer.concat(chunks)));
+  });
 }
