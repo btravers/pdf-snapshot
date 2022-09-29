@@ -44,6 +44,8 @@ jobs:
           version: 7.12.2
           run_install: true
 
-      - run: pnpm --filter ./packages/jest publish --access public --tag ${{ github.event.release.tag_name }}
+      - run: cd ./packages/jest/ && pnpm version --no-git-tag-version ${{ github.event.release.tag_name }} && cd ../../
+
+      - run: pnpm --filter ./packages/jest publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
