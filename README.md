@@ -1,9 +1,5 @@
 # PDF Snapshot
 
-[![NPM version][npm-badge-url]][npm-url]
-[![code style: prettier][prettier-badge-url]][prettier-url]
-![Pull Request CI/CD](https://github.com/btravers/pdf-snapshot/workflows/Pull%20Request%20CI/CD/badge.svg?branch=master)
-
 Jest matcher for visual regression testing of PDF documents. 
 Behaves just like [Jest snapshots](https://facebook.github.io/jest/docs/snapshot-testing.html) do.
 

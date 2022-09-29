@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { GenericContainer, StartedTestContainer } from 'testcontainers';
 
 describe('Jest extension', () => {
-  let container: StartedTestContainer;
+  let container: StartedTestContainer | undefined;
 
   beforeAll(async () => {
     const buildContext = path.resolve(__dirname, '../../..');
@@ -19,7 +19,9 @@ describe('Jest extension', () => {
   }, 300_000);
 
   afterAll(async () => {
-    await container.stop();
+    if (container) {
+      await container.stop();
+    }
   });
 
   it('should perform a snapshot test of a dummy pdf', async () => {
