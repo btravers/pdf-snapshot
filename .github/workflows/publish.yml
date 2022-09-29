@@ -18,7 +18,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - id: meta
-        uses: docker/metadata-action
+        uses: docker/metadata-action@v2
         with:
           images: btravers/pdf-snapshot
 
