@@ -1,9 +1,8 @@
 name: publish
 
 on:
-  push:
-    branches:
-      - 'main'
+  release:
+    types: [published]
 
 jobs:
   docker-publish:
@@ -18,10 +17,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - id: meta
+        uses: docker/metadata-action
+        with:
+          images: btravers/pdf-snapshot
+
       - uses: docker/build-push-action@v3
         with:
           push: true
-          tags: btravers/pdf-snapshot:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
 
   npm-publish:
@@ -39,6 +44,6 @@ jobs:
           version: 7.12.2
           run_install: true
 
-      - run: pnpm --filter ./packages/jest publish --access public
+      - run: pnpm --filter ./packages/jest publish --access public --tag ${{ github.event.release.tag_name }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
