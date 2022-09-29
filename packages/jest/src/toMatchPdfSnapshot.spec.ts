@@ -1,5 +1,5 @@
-import path from 'node:path';
-import fs from 'node:fs';
+import * as path from 'node:path';
+import * as fs from 'node:fs';
 import { GenericContainer, StartedTestContainer } from 'testcontainers';
 
 describe('Jest extension', () => {
