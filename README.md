@@ -5,7 +5,7 @@ Behaves just like [Jest snapshots](https://facebook.github.io/jest/docs/snapshot
 
 Under the hood, it uses [pdf.js](https://github.com/mozilla/pdf.js) for conversion of a pdf to png. 
 In node, pdf.js depends on [canvas](https://github.com/Automattic/node-canvas).
-Finally, the comparison is happening via [pixelmatch](https://github.com/mapbox/pixelmatch.
+Finally, the comparison is happening via [pixelmatch](https://github.com/mapbox/pixelmatch).
 
 In order to be platform agnostic, the png conversion and png comparison is performed by a small server running aside, available as a [Docker image](https://hub.docker.com/r/btravers/pdf-snapshot) and communicating with Jest matcher using [tRCP](https://github.com/trpc/trpc). 
 
