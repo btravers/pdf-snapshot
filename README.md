@@ -1,6 +1,6 @@
 # PDF Snapshot
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/btravers/pdf-snapshot/main)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/btravers/pdf-snapshot/ci/main?logo=githubactions)
 ![npm](https://img.shields.io/npm/v/@btravers/pdf-snapshot-jest?color=g&label=version&logo=npm)
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/btravers/pdf-snapshot?color=g&logo=docker)
 ![GitHub](https://img.shields.io/github/license/btravers/pdf-snapshot?color=g)
