@@ -1,5 +1,10 @@
 # PDF Snapshot
 
+![GitHub branch checks state](https://img.shields.io/github/checks-status/btravers/pdf-snapshot/main)
+![npm](https://img.shields.io/npm/v/@btravers/pdf-snapshot-jest?color=g&label=version&logo=npm)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/btravers/pdf-snapshot?color=g&logo=docker)
+![GitHub](https://img.shields.io/github/license/btravers/pdf-snapshot?color=g)
+
 Jest matcher for visual regression testing of PDF documents. 
 Behaves just like [Jest snapshots](https://facebook.github.io/jest/docs/snapshot-testing.html) do.
 
