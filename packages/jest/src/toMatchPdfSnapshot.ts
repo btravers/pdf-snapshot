@@ -31,6 +31,13 @@ type Result = {
 };
 
 expect.extend({
+  /**
+   * Jest matcher for visual regression testing of PDF document.
+   * Behaves just like tradition Jest snapshots.
+   *
+   * @param pdf PDF content as Buffer.
+   * @param options Comparison options.
+   */
   async toMatchPdfSnapshot(pdf: Buffer, options?: Options): Promise<Result> {
     const { testPath, currentTestName, isNot, snapshotState } = this;
 
@@ -59,9 +66,9 @@ expect.extend({
     );
 
     /**
-     * Create snapshot file identifier
+     * Create snapshot file identifier.
      *
-     * @param pageNumber the page of the pdf file
+     * @param pageNumber The page of the pdf file.
      */
     function snapshotIdentifier(pageNumber: number): string {
       return `${pageNumber.toString().padStart(2, '0')}_${_.kebabCase(
@@ -70,10 +77,10 @@ expect.extend({
     }
 
     /**
-     * Write file from base64 encoded content
+     * Write file from base64 encoded content.
      *
-     * @param data base64 encoded data
-     * @param filePath file path
+     * @param data Base64 encoded data.
+     * @param filePath File path.
      */
     async function writeFile(data: string, filePath: string): Promise<void> {
       const decodedData = Buffer.from(data, 'base64');
@@ -82,7 +89,7 @@ expect.extend({
     }
 
     /**
-     * Get the list of existing snapshots
+     * Get the list of existing snapshots.
      */
     async function getSnapshots(): Promise<Buffer[]> {
       const result: Buffer[] = [];

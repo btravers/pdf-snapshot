@@ -14,6 +14,13 @@ type Result = {
   results: PageResult[];
 };
 
+/**
+ * Transform each page of the PDF to PNG then compare resulting PNG to snapshot images.
+ *
+ * @param pdf PDF content as Buffer.
+ * @param snapshots Array of snapshots as array of Buffer.
+ * @param options PNG transformation and comparison options.
+ */
 export async function matchPdfSnapshot(
   pdf: Buffer,
   snapshots: Buffer[] = [],

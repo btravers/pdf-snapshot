@@ -8,6 +8,13 @@ export type PdfToPngOptions = {
 
 const DEFAULT_SCALE = 1;
 
+/**
+ * Transform a PDF content as Buffer to an array of PNG contents as array of Buffer,
+ * each PNG representing a page of the initial PDF.
+ *
+ * @param pdf PDF content as Buffer.
+ * @param options Options of the PNG transformation.
+ */
 export async function pdfToPng(
   pdf: Buffer,
   options?: PdfToPngOptions,
@@ -24,25 +31,36 @@ export async function pdfToPng(
 
   console.log('Pdf document interpreted');
 
-  async function pdfPageToPng(pageNumber: number): Promise<Buffer> {
-    const page = await pdfDocument.getPage(pageNumber);
-    const viewport = page.getViewport({
-      scale: options?.scale ?? DEFAULT_SCALE,
-    });
-
-    const canvas = createCanvas(viewport.width, viewport.height);
-
-    await page.render({
-      canvasContext: canvas.getContext('2d'),
-      viewport,
-    }).promise;
-
-    return canvas.toBuffer('image/png');
-  }
-
   return await Promise.all(
     Array.from({ length: pdfDocument.numPages }, (_, index) => index + 1).map(
-      (pageNumber) => pdfPageToPng(pageNumber),
+      async (pageNumber) =>
+        pdfDocument
+          .getPage(pageNumber)
+          .then((page) => pdfPageToPng(page, options)),
     ),
   );
+}
+
+/**
+ * Transform one PDF page to a PNG content as Buffer.
+ *
+ * @param page The PDF page.
+ * @param options Options of the PNG transformation.
+ */
+async function pdfPageToPng(
+  page: pdfjs.PDFPageProxy,
+  options?: PdfToPngOptions,
+): Promise<Buffer> {
+  const viewport = page.getViewport({
+    scale: options?.scale ?? DEFAULT_SCALE,
+  });
+
+  const canvas = createCanvas(viewport.width, viewport.height);
+
+  await page.render({
+    canvasContext: canvas.getContext('2d'),
+    viewport,
+  }).promise;
+
+  return canvas.toBuffer('image/png');
 }

@@ -11,6 +11,13 @@ export type DiffPngSnapshotResult =
 const DEFAULT_PIXELMATCH_THRESHOLD = 0.01;
 const DEFAULT_FAILURE_THRESHOLD = 0;
 
+/**
+ * Perform visual comparison between the PNG of the new page and the old version of this same page.
+ *
+ * @param receivedImage PNG content as Buffer representing a page of the PDF.
+ * @param snapshotImage The corresponding snapshot of the page of the PDF.
+ * @param options PNG comparison options.
+ */
 export async function diffPngSnapshot(
   receivedImage: Buffer,
   snapshotImage: Buffer,
@@ -26,6 +33,7 @@ export async function diffPngSnapshot(
     receivedPng.width !== snapshotPng.width;
 
   if (sizeMissMatch) {
+    // todo create specific error and handle it
     throw new Error('Received pdf and snapshot pdf have different sizes');
   }
 
@@ -57,23 +65,11 @@ export async function diffPngSnapshot(
     };
   }
 
-  const compositePng = new PNG({
-    width: imageWidth * 3,
-    height: imageHeight,
-  });
-
-  [snapshotPng, diffPng, receivedPng].forEach((png, index) => {
-    png.bitblt(
-      compositePng,
-      0,
-      0,
-      imageWidth,
-      imageHeight,
-      imageWidth * index,
-      0,
-    );
-  });
-
+  const compositePng = await createCompositePng(
+    receivedPng,
+    snapshotPng,
+    diffPng,
+  );
   const diffImage = await toBuffer(compositePng);
 
   return {
@@ -84,6 +80,44 @@ export async function diffPngSnapshot(
   };
 }
 
+/**
+ * Create a new PNG putting side by side the old version of the page, differences between the two pages
+ * and the new version of the page.
+ *
+ * @param receivedPng PNG of the new page.
+ * @param snapshotPng PNG of the old page.
+ * @param diffPng PNG showing differences between the two PNGs.
+ */
+async function createCompositePng(
+  receivedPng: PNG,
+  snapshotPng: PNG,
+  diffPng: PNG,
+): Promise<PNG> {
+  const compositePng = new PNG({
+    width: receivedPng.width * 3,
+    height: receivedPng.height,
+  });
+
+  [snapshotPng, diffPng, receivedPng].forEach((png, index) => {
+    png.bitblt(
+      compositePng,
+      0,
+      0,
+      receivedPng.width,
+      receivedPng.height,
+      receivedPng.width * index,
+      0,
+    );
+  });
+
+  return compositePng;
+}
+
+/**
+ * Transform PNG content as Buffer to ONG object.
+ *
+ * @param image PNG content as Buffer.
+ */
 async function toRawPng(image: Buffer): Promise<PNG> {
   return new Promise<PNG>((resolve, reject) =>
     new PNG().parse(image, (err, rawImage) => {
@@ -93,6 +127,11 @@ async function toRawPng(image: Buffer): Promise<PNG> {
   );
 }
 
+/**
+ * Transform PNG image to PNG content as Buffer.
+ *
+ * @param image PNG object.
+ */
 async function toBuffer(image: PNG): Promise<Buffer> {
   const imageStream = image.pack();
   return new Promise<Buffer>((resolve, reject) => {
