@@ -69,3 +69,8 @@ describe('test pdf report visual regression', () => {
 ### Go further
 
 You can rely on [testcontainers-node](https://github.com/testcontainers/testcontainers-node) and automate the container start before tests run.
+
+## Credits
+
+- [pdf-visual-diff](https://github.com/moshensky/pdf-visual-diff)
+- [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot)
