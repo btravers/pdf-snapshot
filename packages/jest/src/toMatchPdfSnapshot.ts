@@ -132,8 +132,6 @@ expect.extend({
       },
     });
 
-    const updateSnapshot = snapshotState._updateSnapshot === 'all';
-
     if (_.every(results, 'pass')) {
       snapshotState.matched++;
       return {
@@ -163,28 +161,30 @@ expect.extend({
       };
     }
 
-    if (updateSnapshot) {
+    if (snapshotState._updateSnapshot === 'all') {
       snapshotState.updated++;
       await Promise.all(
-        results
-          .filter((result) => 'pass' in result && !result.pass)
-          .map(async (result, index) => {
-            const pageNumber = index + 1;
-            const snapshotPath = path.join(
-              snapshotsDirectory,
-              `${snapshotIdentifier(pageNumber)}.png`,
-            );
+        results.map(async (result, index) => {
+          if ('pass' in result && result.pass) {
+            return;
+          }
 
-            if ('deleted' in result && result.deleted) {
-              await fs.promises.rm(snapshotPath);
-              return;
-            }
+          const pageNumber = index + 1;
+          const snapshotPath = path.join(
+            snapshotsDirectory,
+            `${snapshotIdentifier(pageNumber)}.png`,
+          );
 
-            if ('newPage' in result) {
-              await writeFile(result.newPage, snapshotPath);
-              return;
-            }
-          }),
+          if ('deleted' in result && result.deleted) {
+            await fs.promises.rm(snapshotPath);
+            return;
+          }
+
+          if ('newPage' in result) {
+            await writeFile(result.newPage, snapshotPath);
+            return;
+          }
+        }),
       );
       return {
         pass: true,
