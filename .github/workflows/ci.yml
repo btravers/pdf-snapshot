@@ -12,12 +12,12 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - uses: pnpm/action-setup@v2.0.1
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7.12.2
+          version: 7.14.2
           run_install: true
 
       - run: pnpm --filter ./packages/jest test
