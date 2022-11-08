@@ -3,6 +3,10 @@
   "description": "Tool to test visual regression in PDF documents",
   "author": "Benoit TRAVERS",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/btravers/pdf-snapshot.git"
+  },
   "scripts": {
     "format": "prettier --write \"packages/**/*.ts\"",
     "lint": "eslint \"packages/**/*.ts\" --fix --max-warnings=0"
