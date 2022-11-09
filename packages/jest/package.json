@@ -10,6 +10,13 @@
     "type": "git",
     "url": "https://github.com/btravers/pdf-snapshot.git"
   },
+  "keywords": [
+    "test",
+    "jest",
+    "snapshot",
+    "pdf",
+    "visual testing"
+  ],
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
