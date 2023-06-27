@@ -1,6 +1,9 @@
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import { GenericContainer, StartedTestContainer } from 'testcontainers';
+import { toMatchPdfSnapshot } from './toMatchPdfSnapshot';
+
+expect.extend({ toMatchPdfSnapshot });
 
 describe('Jest extension', () => {
   let container: StartedTestContainer | undefined;
@@ -28,6 +31,7 @@ describe('Jest extension', () => {
     const pdfPath = path.join(__dirname, '__fixtures__/dummy.pdf');
     const pdf = await fs.promises.readFile(pdfPath);
 
+    // @ts-expect-error
     await expect(pdf).toMatchPdfSnapshot();
   });
 });

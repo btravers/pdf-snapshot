@@ -20,7 +20,7 @@ jobs:
       - id: meta
         uses: docker/metadata-action@v2
         with:
-          images: btravers/pdf-snapshot
+          images: armandabric/pdf-snapshot
 
       - uses: docker/build-push-action@v3
         with:
@@ -36,18 +36,18 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
 
       - uses: pnpm/action-setup@v2.0.1
         with:
-          version: 7.12.2
+          version: 8.6.1
           run_install: true
 
-      - run: cp ./README.md ./packages/jest/
+      - run: cp ./README.md ./packages/pdf-snapshot-matcher/
 
-      - run: cd ./packages/jest/ && pnpm version --no-git-tag-version ${{ github.event.release.tag_name }} && cd ../../
+      - run: cd ./packages/pdf-snapshot-matcher/ && pnpm version --no-git-tag-version ${{ github.event.release.tag_name }} && cd ../../
 
-      - run: pnpm --filter ./packages/jest publish --access public --no-git-checks
+      - run: pnpm --filter ./packages/pdf-snapshot-matcher publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

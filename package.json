@@ -1,11 +1,11 @@
 {
-  "name": "@btravers/pdf-snapshot",
+  "name": "@armandabric/pdf-snapshot",
   "description": "Tool to test visual regression in PDF documents",
   "author": "Benoit TRAVERS",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/btravers/pdf-snapshot.git"
+    "url": "https://github.com/armandabric/pdf-snapshot.git"
   },
   "scripts": {
     "format": "prettier --write \"packages/**/*.ts\"",
@@ -21,7 +21,7 @@
     "typescript": "^4.8.4"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": ">=18.0.0",
     "pnpm": ">=7.12.0"
   }
 }

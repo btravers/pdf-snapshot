@@ -2,7 +2,7 @@ FROM node:18-slim AS pnpm
 
 ENV CI=1
 
-ARG PNPM_VERSION=7.14.2
+ARG PNPM_VERSION=8.6.1
 
 RUN apt-get update && \
     apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
