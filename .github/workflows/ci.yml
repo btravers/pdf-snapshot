@@ -20,4 +20,4 @@ jobs:
           version: 8.6.1
           run_install: true
 
-      - run: pnpm --filter ./packages/pdf-snapshot-matcher test
+      - run: pnpm test

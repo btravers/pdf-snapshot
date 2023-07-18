@@ -5,5 +5,4 @@ module.exports = {
     '\\.ts$': 'ts-jest',
   },
   expand: true,
-  setupFilesAfterEnv: ['<rootDir>/dist/toMatchPdfSnapshot'],
 };

@@ -9,7 +9,8 @@
   },
   "scripts": {
     "format": "prettier --write \"packages/**/*.ts\"",
-    "lint": "eslint \"packages/**/*.ts\" --fix --max-warnings=0"
+    "lint": "eslint \"packages/**/*.ts\" --fix --max-warnings=0",
+    "test": "pnpm -r --workspace-concurrency=1 test"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.42.1",

@@ -8,12 +8,12 @@ import type { MatcherContext, MatcherFunctionWithContext } from 'expect';
 
 import type { AppRouter } from '@armandabric/pdf-snapshot-service/dist/router';
 
-type Options = {
+export type Options = {
   scale?: number;
   failureThreshold?: number;
 };
 
-type Result = {
+export type Result = {
   pass: boolean;
   message: () => string;
 };
