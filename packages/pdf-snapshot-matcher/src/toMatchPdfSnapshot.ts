@@ -6,7 +6,7 @@ import _ from 'lodash';
 import dedent from 'dedent';
 import type { MatcherContext, MatcherFunctionWithContext } from 'expect';
 
-import type { AppRouter } from '@armandabric/pdf-snapshot-service/dist/router';
+import type { AppRouter } from '@armandabric/pdf-snapshot-service';
 
 export type Options = {
   scale?: number;

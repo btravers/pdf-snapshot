@@ -1,7 +1,7 @@
 import express from 'express';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { createContext } from './context';
-import { appRouter } from './router';
+import { appRouter, type AppRouter } from './router';
 
 const app = express();
 
@@ -13,3 +13,5 @@ app.use(
 );
 
 app.listen(3000);
+
+export { type AppRouter };
